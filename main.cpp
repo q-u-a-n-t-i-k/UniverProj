@@ -2,12 +2,12 @@
 #include <raylib.h>
 #include <cmath>
 
+#include "properties.cpp"
+
 using namespace std;
 
 int main () {
 
-    const int SCREEN_WIDTH = 1200;
-    const int SCREEN_HEIGHT = 800;
     int ball_x = 100;
     int ball_y = 100;
     int ball_speed_x = 5;
@@ -17,7 +17,7 @@ int main () {
     int aim_x = rand()%(SCREEN_WIDTH-2*aim_radius)+aim_radius;
     int aim_y = rand()%(SCREEN_HEIGHT-2*aim_radius)+aim_radius;
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Prog");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
 
     while (WindowShouldClose() == false){
@@ -31,7 +31,7 @@ int main () {
         if(IsKeyDown(KEY_S) && ball_y + ball_radius + ball_speed_y <= SCREEN_HEIGHT)
         ball_y += ball_speed_y;
         
-        if(sqrt(pow(ball_x-aim_x,2) + pow(ball_y-aim_y,2))<aim_radius){
+        if(sqrt(pow(ball_x-aim_x,2) + pow(ball_y-aim_y,2))<aim_radius+ball_radius){
             aim_x = rand()%(SCREEN_WIDTH-2*aim_radius)+aim_radius;
             aim_y = rand()%(SCREEN_HEIGHT-2*aim_radius)+aim_radius;
         }
