@@ -5,15 +5,13 @@ using namespace std;
 
 int main () {
 
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 600;
+    const int SCREEN_WIDTH = 1200;
+    const int SCREEN_HEIGHT = 800;
     int ball_x = 100;
     int ball_y = 100;
     int ball_speed_x = 5;
     int ball_speed_y = 5;
     int ball_radius = 15;
-
-    cout << "Hello World" << endl;
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Prog");
     SetTargetFPS(60);
@@ -34,7 +32,7 @@ int main () {
         }
         
         BeginDrawing();
-            ClearBackground(GREEN);
+            ClearBackground(ORANGE);
             DrawCircle(ball_x,ball_y,ball_radius, WHITE);
         EndDrawing();
     }
