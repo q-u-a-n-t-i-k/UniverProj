@@ -36,12 +36,18 @@ class Button{
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) down = true;}
 
             color = default_color;
-            if(hover) color = hover_color;
-            if(pressed) BtnPressed();
-            if(down){
-                color = pressed_color;
-                BtnDown();}
+            if(down)color = pressed_color;
+            else if(hover) color = hover_color;
                      
+        }
+
+        Button(int x, int y, int w, int h, int f_s, char t[]){
+            pos_x = x;
+            pos_y = y;
+            width = w;
+            height = h;
+            font_size = f_s;
+            text = t;
         }
 };
 
@@ -56,13 +62,7 @@ int main () {
     int aim_x = rand()%(SCREEN_WIDTH-2*aim_radius)+aim_radius;
     int aim_y = rand()%(SCREEN_HEIGHT-2*aim_radius)+aim_radius;
 
-    Button btn;
-    btn.pos_x = 100;
-    btn.pos_y = 100;
-    btn.width = 200;
-    btn.height = 75;
-    btn.font_size = 40;
-    btn.text = "Button";
+    Button btn(100,100,200,75,40,"Button");
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
