@@ -7,18 +7,14 @@
 using namespace std;
 
 class Button{
-    private:
-        bool hover = false, pressed=false, down = true;
-
     public:
         int pos_x, pos_y;
         int width, height;
         int font_size;
         char * text;
+        bool hover = false, pressed=false, down = true;
         Color color, default_color = GRAY, hover_color = LIGHTGRAY, pressed_color = DARKGRAY, text_color = BLACK;
-    
-        void BtnPressed(){cout <<"press";};
-        void BtnDown(){cout <<"dooown";};
+
 
         void Draw(){
             DrawRectangle(pos_x,pos_y,width,height,color);
@@ -62,7 +58,7 @@ int main () {
     int aim_x = rand()%(SCREEN_WIDTH-2*aim_radius)+aim_radius;
     int aim_y = rand()%(SCREEN_HEIGHT-2*aim_radius)+aim_radius;
 
-    Button btn(100,100,200,75,40,"Button");
+    Button btn(1000,725,200,75,40,"Right");
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
@@ -70,7 +66,7 @@ int main () {
     while (WindowShouldClose() == false){
         
         btn.Calculate();
-        if(IsKeyDown(KEY_D) && ball_x + ball_radius + ball_speed_x <= SCREEN_WIDTH)
+        if(btn.down && ball_x + ball_radius + ball_speed_x <= SCREEN_WIDTH)
         ball_x += ball_speed_x;
         if(IsKeyDown(KEY_A) && ball_x - ball_radius - ball_speed_x >= 0)
         ball_x -= ball_speed_x;
