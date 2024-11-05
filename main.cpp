@@ -11,7 +11,7 @@ using namespace std;
 
 int main () {
 
-    int ball_x = 100;
+    int ball_x = 200;
     int ball_y = 100;
     int ball_speed_x = 5;
     int ball_speed_y = 5;
