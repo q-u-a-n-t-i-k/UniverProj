@@ -42,17 +42,18 @@ int main () {
             aim_y = rand()%(SCREEN_HEIGHT-2*aim_radius)+aim_radius;
         }
         BeginDrawing();
-            ClearBackground(WHITE);
-            /*DrawCircle(ball_x,ball_y,ball_radius, WHITE);
+            ClearBackground(GREEN);
+            DrawCircle(ball_x,ball_y,ball_radius, WHITE);
             DrawCircle(aim_x,aim_y,aim_radius, RED);
-            btn.Draw();*/
+            btn.Draw();
+            /*
             DrawRectangle(1920-64*5,0,64*5,1080,GRAY);
             DrawRectangle(0,64*15,1920,120,GRAY);
             for(int i = 0; i < 25; i++){
                 for(int j = 0; j < 15; j++){
                     if((i+j)%2 == 1) DrawRectangle(i*64,j*64,64,64,ORANGE);
                 }
-            }
+            }*/
         EndDrawing();
     }
 
