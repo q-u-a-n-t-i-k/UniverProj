@@ -2,8 +2,9 @@
 #include <raylib.h>
 #include <cmath>
 
-#include "properties.cpp"
-#include "button.cpp"
+
+#include "properties.h"
+#include "button.h"
 
 using namespace std;
 
@@ -12,13 +13,14 @@ using namespace std;
 int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
-
+    
     const Texture2D beet = LoadTexture("resources/textures/plants/beet.png");
     const Texture2D bed = LoadTexture("resources/textures/structers/bed.png");
     const Texture2D heater = LoadTexture("resources/textures/structers/heater.png");
     const Texture2D grass = LoadTexture("resources/textures/plants/grass.png");
     const Texture2D rock[3] = {LoadTexture("resources/textures/structers/rock_1.png"),LoadTexture("resources/textures/structers/rock_2.png"),LoadTexture("resources/textures/structers/rock_3.png")};
     const Texture2D ground[2] = {LoadTexture("resources/textures/structers/ground_1.png"),LoadTexture("resources/textures/structers/ground_2.png")};
+
 
     Button btn(1920-64*5+60,64*15+25,200,70,40,(char*)"Continue");
     btn.default_color = GREEN;
@@ -29,21 +31,21 @@ int main () {
     
         btn.Calculate();
         if(btn.pressed){
-        for(int i = 0; i < 15; i++){
-            for(int j = 0; j < 25; j++){
-                area[i][j] = 0;
-                if (rand()%100<5){
-                    area[i][j] = rand()%3+3;
-                }
-                else if (rand()%100<5){
-                    area[i][j] = rand()%2+1;
-                }
-                else if (rand()%100<1){
-                    area[i][j] = 7;
+            for(int i = 0; i < 15; i++){
+                for(int j = 0; j < 25; j++){
+                    area[i][j] = 0;
+                    if (rand()%100<5){
+                        area[i][j] = rand()%3+3;
+                    }
+                    else if (rand()%100<5){
+                        area[i][j] = rand()%2+1;
+                    }
+                    else if (rand()%100<1){
+                        area[i][j] = 7;
+                    }
                 }
             }
-        }
-        area[10][20] = 6;
+            area[10][20] = 6;
         }
         BeginDrawing();
             ClearBackground((Color){224,94,65,255});
@@ -69,6 +71,7 @@ int main () {
                     else if(area[i][j] == 7) DrawTexture(grass,64*j,64*i,WHITE);
                 }
             } 
+            DrawText(TextFormat("%08i",counter),0,0,40,WHITE);
         EndDrawing();
         
     }

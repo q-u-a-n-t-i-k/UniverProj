@@ -1,5 +1,8 @@
-#include <raylib.h>
+#ifndef BUTTON_H
+#define BUTTON_H
 
+#include <raylib.h>
+#include "properties.h"
 class Button{
     public:
         float pos_x, pos_y;
@@ -17,6 +20,9 @@ class Button{
             DrawTextEx(font,text,(Vector2){ pos_x+(width-t_w)/2, pos_y+(height-font.baseSize)/2},font_size,0,text_color);
         }
         
+        void Press(){
+            counter ++;
+        }
         void Calculate(){
             pressed = false;
             hover = false;
@@ -27,6 +33,7 @@ class Button{
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) pressed = true;
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) down = true;}
 
+            if(pressed) Press();
             color = default_color;
             if(down)color = pressed_color;
             else if(hover) color = hover_color;
@@ -42,3 +49,4 @@ class Button{
             font_size = f_s;
         }
 };
+#endif
