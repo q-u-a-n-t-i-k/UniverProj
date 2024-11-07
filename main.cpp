@@ -12,7 +12,7 @@ using namespace std;
 int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
-    Button btn(100,100,200,75,40,(char*)"Button");
+    Button btn(200,100,200,75,40,(char*)"Button");
     while (WindowShouldClose() == false){
     
         btn.Calculate();
