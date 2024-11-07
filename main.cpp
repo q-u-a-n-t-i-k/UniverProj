@@ -15,6 +15,8 @@ int main () {
 
     const Texture2D beet = LoadTexture("resources/textures/plants/beet.png");
     const Texture2D bed = LoadTexture("resources/textures/structers/bed.png");
+    const Texture2D heater = LoadTexture("resources/textures/structers/heater.png");
+    const Texture2D grass = LoadTexture("resources/textures/plants/grass.png");
     const Texture2D rock[3] = {LoadTexture("resources/textures/structers/rock_1.png"),LoadTexture("resources/textures/structers/rock_2.png"),LoadTexture("resources/textures/structers/rock_3.png")};
     const Texture2D ground[2] = {LoadTexture("resources/textures/structers/ground_1.png"),LoadTexture("resources/textures/structers/ground_2.png")};
 
@@ -36,9 +38,12 @@ int main () {
                 else if (rand()%100<5){
                     area[i][j] = rand()%2+1;
                 }
+                else if (rand()%100<1){
+                    area[i][j] = 7;
+                }
             }
         }
-
+        area[10][20] = 6;
         }
         BeginDrawing();
             ClearBackground((Color){224,94,65,255});
@@ -60,9 +65,12 @@ int main () {
                     else if(area[i][j] == 3) DrawTexture(rock[0],64*j,64*i,WHITE);
                     else if(area[i][j] == 4) DrawTexture(rock[1],64*j,64*i,WHITE);
                     else if(area[i][j] == 5) DrawTexture(rock[2],64*j,64*i,WHITE);
+                    else if(area[i][j] == 6) DrawTexture(heater,64*j,64*i-24,WHITE);
+                    else if(area[i][j] == 7) DrawTexture(grass,64*j,64*i,WHITE);
                 }
-            }
+            } 
         EndDrawing();
+        
     }
 
     CloseWindow();
