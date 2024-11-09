@@ -20,7 +20,7 @@ int main () {
     const Texture2D iron = LoadTexture("resources/textures/structers/crator.png");
     const Texture2D heater = LoadTexture("resources/textures/structers/heater.png");
     const Texture2D grass = LoadTexture("resources/textures/plants/grass.png");
-    const Texture2D tree[3] = {LoadTexture("resources/textures/plants/tree_1.png"),LoadTexture("resources/textures/plants/tree_2.png"),LoadTexture("resources/textures/plants/tree_3.png")};
+    const Texture2D tree[4] = {LoadTexture("resources/textures/plants/sapling.png"),LoadTexture("resources/textures/plants/tree_1.png"),LoadTexture("resources/textures/plants/tree_2.png"),LoadTexture("resources/textures/plants/tree_3.png")};
     const Texture2D ground[5] = {LoadTexture("resources/textures/structers/rock_1.png"),LoadTexture("resources/textures/structers/rock_2.png"),LoadTexture("resources/textures/structers/rock_3.png"),LoadTexture("resources/textures/structers/ground_1.png"),LoadTexture("resources/textures/structers/ground_2.png")};
 
 
@@ -44,7 +44,7 @@ int main () {
                         area[i][j] = rand()%2+1;
                     }
                     else if (rand()%100<2){
-                        area[i][j] = rand()%4+10;
+                        area[i][j] = rand()%5+10;
                     }
                     else if (rand()%100<1){
                         area[i][j] = 7;
