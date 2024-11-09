@@ -1,5 +1,6 @@
 #ifndef PROP_H
 #define PROP_H
+//global var
 extern int counter = 0;
 
 const int SCREEN_WIDTH = 1920;
