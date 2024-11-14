@@ -17,22 +17,23 @@ class Progressbar{
 
         void Draw(){
             
+            DrawRectangle(pos_x, pos_y, width, height, color);
+            DrawRectangle(pos_x+thickness, pos_y+thickness, width-2*thickness, height-2*thickness, beg_color);
 
-            if (ishorizon == true){
-                DrawRectangle(pos_x, pos_y, width, height, color);
-                DrawRectangle(pos_x+thickness, pos_y+thickness, width-2*thickness, height-2*thickness, beg_color);
+            if (ishorizon){
                 DrawRectangle(pos_x+thickness, pos_y+thickness, ((width-2*thickness)/100.0)*fullbar ,height-2*thickness,color_bar);
-                int t_w = MeasureText(text,font_size);
-                DrawTextEx(font,text,(Vector2){ pos_x+(width-t_w)/2, pos_y+(height-font_size)/2},font_size,0,text_color);
             }
             else {
-                DrawRectangle(pos_x, pos_y, height, width, color);
-                DrawRectangle(pos_x+thickness, pos_y+thickness, height-2*thickness,width-2*thickness , beg_color);
-                DrawRectangle(pos_x+thickness, pos_y+thickness, height-2*thickness ,((width-2*thickness)/100.0)*fullbar,color_bar);
-                int t_w = MeasureText(text,font_size);
-                DrawTextEx(font,text,(Vector2){pos_x+(height-t_w)/2,pos_y+(width-font_size)/2},font_size,0,text_color);
+                DrawRectangle(pos_x+thickness, pos_y+thickness, width-2*thickness ,((height-2*thickness)/100.0)*fullbar,color_bar);
             }
             
+            int t_w = MeasureText(text,font_size);
+            DrawTextEx(font,text,(Vector2){ pos_x+(width-t_w)/2, pos_y+(height-font_size)/2},font_size,0,text_color);
+            
+        }
+        void drow2(){
+            
+
         }
         Progressbar(float x, float y, int w, int h, int f_s, int th, char t[],  bool hor){
             pos_x = x;
