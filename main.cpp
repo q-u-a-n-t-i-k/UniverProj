@@ -21,6 +21,7 @@ int main () {
     InitAudioDevice();              
     Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
     PlayMusicStream(music);
+    SetMusicVolume(music, 0.2);
     float timePlayed = 0.0f;
     
     while (WindowShouldClose() == false){
@@ -30,7 +31,7 @@ int main () {
         BeginDrawing();
         ClearBackground(LIME);
             btn.Draw();
-            pr.Draw();/*
+            pr.Draw();
             DrawRectangle(1920-64*5,0,64*5,1080,GRAY);
             DrawRectangle(0,64*15,1920,120,GRAY);
             for(int i = 0; i < 25; i++){
@@ -38,7 +39,7 @@ int main () {
                     if((i+j)%2 == 1) DrawRectangle(i*64,j*64,64,64,ORANGE);
                 }
             }
-            */
+            
         
         EndDrawing();
          
