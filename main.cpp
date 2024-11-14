@@ -13,11 +13,11 @@ int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
     Button btn(100,100,200,75,40,(char*)"Button");
-    Progressbar pr(200, 200, 200, 75, 40, 25, (char*)"LALA",1);
+    Progressbar pr(200, 200, 200, 75, 40, 25, (char*)"LALA",0);
     pr.color =  GRAY;
     pr.beg_color =  LIGHTGRAY;
     pr.color_bar =  RED;
-    pr.fullbar = 150;
+    pr.fullbar = 50;
     InitAudioDevice();              
     Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
     PlayMusicStream(music);
