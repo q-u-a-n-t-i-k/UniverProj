@@ -20,10 +20,7 @@ class Button{
             DrawTextEx(font,text,(Vector2){ pos_x+(width-t_w)/2, pos_y+(height-font.baseSize)/2},font_size,0,text_color);
         }
         
-        void Press(){
-            counter ++;
-        }
-        void Calculate(){
+        void calculate(){
             pressed = false;
             hover = false;
             down = false;
@@ -33,7 +30,6 @@ class Button{
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) pressed = true;
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) down = true;}
 
-            if(pressed) Press();
             color = default_color;
             if(down)color = pressed_color;
             else if(hover) color = hover_color;
