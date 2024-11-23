@@ -2,28 +2,11 @@
 #define FARM_H
 
 #include "tile.h"
+#include "properties.h"
 
 class Farm{
     public:
-    const static int n = 15, m=25;
-    Tile matrix[n][m];
-    Color Col = (Color){224,94,65,255};
-    const Texture2D bed = LoadTexture("resources/textures/bed.png");
-    const Texture2D grass = LoadTexture("resources/textures/grass.png");
-    const Texture2D ground[6]={
-        LoadTexture("resources/textures/1.png"),
-        LoadTexture("resources/textures/1.png"),
-        LoadTexture("resources/textures/2.png"),
-        LoadTexture("resources/textures/3.png"),
-        LoadTexture("resources/textures/4.png"),
-        LoadTexture("resources/textures/5.png")};
-
-    const Texture2D tree[5]={
-        LoadTexture("resources/textures/201.png"),
-        LoadTexture("resources/textures/201.png"),
-        LoadTexture("resources/textures/202.png"),
-        LoadTexture("resources/textures/203.png"),
-        LoadTexture("resources/textures/204.png")};
+    Tile matrix[height][width];
  
 
     Farm(){
@@ -39,24 +22,9 @@ class Farm{
     }
 
     void draw(){
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                int x = j*64,y=i*64,type=matrix[i][j].type,hover = matrix[i][j].hover;
-                DrawRectangle(x+hover,y+hover,64-hover*2,64-hover*2,Col);
-                if(type != 0){
-                    int d_y = 0, d_x = 0;
-
-                    if(type/100 == 1)
-                        DrawTexture(bed,x,y,WHITE);
-                    
-                    else if(type/100 == 2){
-                        DrawTexture(grass,x,y,WHITE);
-                        d_y = -112;
-                        d_x = -8;
-                    }
-
-                    if(type%10 != 0) DrawTexture(get_texture(type),x+d_x,y+d_y,WHITE);
-                }
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                matrix[i][j].draw(j*64,i*64);
             }
         }
     }
@@ -67,26 +35,22 @@ class Farm{
     }
 
     void nextDay(){
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
                 matrix[i][j].grow();
             }
         }
     }
 
     void calculate(){
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
                 matrix[i][j].calculate();
             }
         }
     }
 
-    Texture2D get_texture(int type){
-        if((int)type/100 == 0) return ground[type];
-        else if((int)(type/100) == 2) return tree[type%10];
-        return bed;
-    }
+    
 
 };
 #endif

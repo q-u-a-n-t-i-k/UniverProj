@@ -3,6 +3,7 @@
 
 #include <raylib.h>
 #include "properties.h"
+
 class Button{
     public:
         float pos_x, pos_y;
