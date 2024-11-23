@@ -8,6 +8,7 @@
 #include "farm.h"
 
 Textures Img;
+
 using namespace std;
 
 int main () {
@@ -16,6 +17,7 @@ int main () {
     SetTargetFPS(60);
 
     int m_x, m_y;
+    Img.Load();
     Button btn(1920-64*5+60,64*15+25,200,70,40,(char*)"Continue");
     btn.default_color = GREEN;
     Farm pole;
@@ -49,3 +51,4 @@ int main () {
 
     CloseWindow();
 }
+
