@@ -14,7 +14,7 @@ class Farm{
             matrix[5][6+i].type=200+i;
         }
         for(int i = 0; i < 5; i++){
-            matrix[7][6+i].type=111;
+            matrix[7][6+i].type=100;
         }
         for(int i = 1; i < 6; i++){
             matrix[9][5+i].type=i;

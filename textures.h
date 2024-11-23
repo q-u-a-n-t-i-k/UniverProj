@@ -9,20 +9,34 @@ using namespace std;
 
 class Textures{
     private:
-        vector<Texture2D> draw_queue;
-        vector<array<int,2>> draw_cord;
-        Texture2D bed;
+        vector<array<int,3>> draw_queue;
+        array<Texture2D,6> plants[2];
         array<Texture2D,6> ground;
-        array<Texture2D,5> tree;
+        array<Texture2D,5> trees;
 
         Texture2D get_texture(int type){
             if((int)type/100 == 0) return ground[type];
-            else if((int)(type/100) == 2) return tree[type%10];
-            return bed;
+            else if((int)(type/100) == 1) return plants[(type-100)/10][type%10];
+            else if((int)(type/100) == 2) return trees[type%10];
+            return ground[0];
         }
     public:
         void Load(){
-        bed = LoadTexture("resources/textures/bed.png");
+        plants[0]={
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png")};
+        plants[1]={
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/111.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png"),
+            LoadTexture("resources/textures/bed.png")};
+
         ground={
             LoadTexture("resources/textures/1.png"),
             LoadTexture("resources/textures/1.png"),
@@ -31,7 +45,7 @@ class Textures{
             LoadTexture("resources/textures/4.png"),
             LoadTexture("resources/textures/5.png")};
 
-        tree={
+        trees={
             LoadTexture("resources/textures/grass.png"),
             LoadTexture("resources/textures/201.png"),
             LoadTexture("resources/textures/202.png"),
@@ -40,9 +54,8 @@ class Textures{
         }
 
         void add(int type, int x, int y){
-            draw_queue.push_back(get_texture(type));
-            array<int,2> a = {x,y};
-            draw_cord.push_back(a);
+            array<int,3> a = {type,x,y};
+            draw_queue.push_back(a);
         }
 
         void calculate(){
@@ -50,7 +63,7 @@ class Textures{
         }
         void draw(){
             for (int i = 0; i < (int)draw_queue.size(); i++) {
-                DrawTexture(draw_queue[i],draw_cord[i][0],draw_cord[i][1],WHITE);
+                DrawTexture(get_texture(draw_queue[i][0]),draw_queue[i][1],draw_queue[i][2],WHITE);
             }
         }
 };

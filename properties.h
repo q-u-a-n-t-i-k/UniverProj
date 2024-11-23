@@ -4,8 +4,9 @@
 #include <string>
 #include "textures.h"
 //global var
-
 extern Textures Img;
+extern bool building;
+extern int money, coal, iron, oxugen, temperature, building_type, building_target;
 
 //const var
 const int SCREEN_WIDTH = 1920;
