@@ -31,12 +31,12 @@ int main () {
     btn.default_color = GREEN;
 
     array<int,5> ar = {25,0,0,0,0};
-    Goods g(20,980,5,200,ar,(char*)"Continue");
+    Goods g(20,980,200,201,ar,(char*)"Continue");
 
     while (WindowShouldClose() == false){
         //update variables
         pole.calculate();//(must be first)
-        
+
         btn.calculate();
         g.calculate();
         Img.calculate();
