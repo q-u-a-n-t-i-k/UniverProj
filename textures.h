@@ -11,7 +11,7 @@ class Textures{
     private:
         vector<array<int,3>> draw_queue;
         array<Texture2D,6> plants[2];
-        array<Texture2D,6> ground;
+        array<Texture2D,8> ground;
         array<Texture2D,5> trees;
 
         Texture2D get_texture(int type){
@@ -43,7 +43,9 @@ class Textures{
             LoadTexture("resources/textures/2.png"),
             LoadTexture("resources/textures/3.png"),
             LoadTexture("resources/textures/4.png"),
-            LoadTexture("resources/textures/5.png")};
+            LoadTexture("resources/textures/5.png"),
+            LoadTexture("resources/textures/6.png"),
+            LoadTexture("resources/textures/7.png")};
 
         trees={
             LoadTexture("resources/textures/grass.png"),
@@ -61,9 +63,11 @@ class Textures{
         void calculate(){
             draw_queue = {};
         }
-        void draw(){
+        void draw(bool building, int building_target){
             for (int i = 0; i < (int)draw_queue.size(); i++) {
-                DrawTexture(get_texture(draw_queue[i][0]),draw_queue[i][1],draw_queue[i][2],WHITE);
+                Color col = WHITE;
+                // if(building && not (building_target/100 == draw_queue[i][0]/100 && draw_queue[i][0] <= building_target)) col = (Color){255,80,80,255};
+                DrawTexture(get_texture(draw_queue[i][0]),draw_queue[i][1],draw_queue[i][2],col);
             }
         }
 };

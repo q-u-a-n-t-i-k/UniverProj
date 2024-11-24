@@ -10,7 +10,7 @@
 // init val for externs in properties
 Textures Img;
 bool building = true;
-int money, coal, iron, oxugen, temperature, building_target = 200, building_type = 201;
+int money, coal, iron, oxugen, temperature, building_target = 5, building_type = 200;
 
 using namespace std;
 
@@ -35,24 +35,27 @@ int main () {
 
         //logic
         if(m_x <= 25 && m_y <= 15){
-            pole.matrix[m_y][m_x].hover = 2;// border width (px)
+            if(!building || building_target == 5) pole.matrix[m_y][m_x].hover = 2;// border width (px)
             if(building && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 if(building_target/100 == pole.matrix[m_y][m_x].type/100 && pole.matrix[m_y][m_x].type <= building_target){
                     pole.build(m_y,m_x,building_type);
                     building = false;}
             }
         }
-        else if(btn.down){ pole.nextDay();}
+        else if(btn.pressed){ pole.nextDay();}
 
         //drawing
         BeginDrawing();
             ClearBackground(GREEN);
+            if(building) ClearBackground(YELLOW);
             
             DrawRectangle(1920-64*5,0,64*5,1080,GRAY);
             DrawRectangle(0,64*15,1920,120,GRAY);
 
             pole.draw();
-            Img.draw();
+            Img.draw(building,building_target);
+            pole.draw_building();
+
             btn.Draw();
             
         EndDrawing();

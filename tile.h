@@ -33,6 +33,7 @@ class Tile{
     }
     void calculate(){
         hover = 0;
+        if(building && building_target/100 == type/100 && type <= building_target && building_target > 5) hover = 2;
     }
 };
 
