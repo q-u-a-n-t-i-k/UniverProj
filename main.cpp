@@ -12,7 +12,7 @@
 // init val for externs in properties
 Textures Img;
 bool building = false;
-int money = 200, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200;
+int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200;
 
 using namespace std;
 
@@ -39,7 +39,7 @@ int main () {
     shop[5] = Goods(600,980,100,103,ar,123);
     shop[6] = Goods(680,980,100,104,ar,124);
     shop[7] = Goods(760,980,100,105,ar,125);
-    shop[8] = Goods(840,980,200,201,ar,100);
+    shop[8] = Goods(840,980,200,201,ar,121);
 
     shop[9] = Goods(960,980,402,0,ar,403);
 

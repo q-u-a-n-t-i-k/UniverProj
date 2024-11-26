@@ -33,16 +33,16 @@ class Textures{
             plants[0]={
                 LoadTexture("resources/textures/bed.png"),
                 LoadTexture("resources/textures/wheat_0.png"),
-                LoadTexture("resources/textures/wheat_0.png"),
-                LoadTexture("resources/textures/wheat_0.png"),
+                LoadTexture("resources/textures/carrot_0.png"),
+                LoadTexture("resources/textures/beet_0.png"),
                 LoadTexture("resources/textures/wheat_0.png"),
                 LoadTexture("resources/textures/wheat_0.png")};
             plants[1]={
+                LoadTexture("resources/textures/bed.png"),
                 LoadTexture("resources/textures/wheat_1.png"),
-                LoadTexture("resources/textures/wheat_1.png"),
-                LoadTexture("resources/textures/wheat_1.png"),
-                LoadTexture("resources/textures/wheat_1.png"),
-                LoadTexture("resources/textures/wheat_1.png"),
+                LoadTexture("resources/textures/carrot_1.png"),
+                LoadTexture("resources/textures/beet_1.png"),
+                LoadTexture("resources/textures/corn_1.png"),
                 LoadTexture("resources/textures/wheat_1.png")};
 
             plants[2]={
