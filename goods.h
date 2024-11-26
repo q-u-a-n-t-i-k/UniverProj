@@ -8,21 +8,28 @@
 class Goods{
     public:
         
-        int type, target, x, y;
-        Texture2D icon;
+        int type, target, x, y, img,n;
         Color col = GREEN;
         Color sign_col[5] = {YELLOW,BLACK,WHITE,BLUE,ORANGE};
         string sign[5] = {"M","C","I","O","T"};
         bool hover;
         array<int,5> req;
     
-        Goods(int x, int y, int target, int type, array<int,5> r, char[]){
+        Goods(int x, int y, int target, int type, array<int,5> r, int img){
             this->x = x;
             this->y = y;
             this->target = target;
             this->type = type;
             this->req = r;
-            cout<<endl;
+            this->img = img;
+            for(int i =0; i<5 ;i++) if(req[i]!=0)n++;
+        }
+        Goods(){
+            x=0;
+            y=0;
+            target = 5;
+            type = 100;
+            req = {25,0,0,0,0};
         }
 
         void calculate(){
@@ -36,15 +43,18 @@ class Goods{
         void draw(){
             if(hover && !building){
                 int ar[5]={money,coal,iron,oxygen,temperature};
-                DrawRectangle(x-128,y-56,320,48,(Color){25, 51, 77,255});
+                DrawRectangle(x-32*(n-1),y-56,64*n,48,(Color){25, 51, 77,255});
+                int k = 0;
                 for(int i = 0;i<5;i++){
+                    if(req[i]==0)continue;
                     col = (Color){0, 204, 102,255};
                     if(req[i]>ar[i]) col = RED;
-                    DrawText(TextFormat("%02i", req[i]),x-120+i*64,y-42,24,col);
-                    DrawText(sign[i].c_str(),x-88+i*64,y-42,24,sign_col[i]);
+                    DrawText(TextFormat("%02i", req[i]),x+8-32*(n-1)+k*64,y-42,24,col);
+                    DrawText(sign[i].c_str(),x-32*(n-1)+40+k*64,y-42,24,sign_col[i]);
+                    k++;
                 }
             }
-            DrawRectangle(x,y,64,64,VIOLET);
+            Img.add(img,x,y);
         }
         void press(){
             if(money >= req[0] && coal >= req[1] && iron >= req[2] && oxygen >= req[3] && temperature >= req[4]){
@@ -55,6 +65,7 @@ class Goods{
                 coal -= req[1];
                 iron -= req[2];
             }
+            
         }
 
 };

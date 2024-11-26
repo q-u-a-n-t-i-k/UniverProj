@@ -32,12 +32,14 @@ class Farm{
     void draw_building(){
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
-                if(building && building_target == 5 && matrix[i][j].type > 5) DrawRectangle(j*64,i*64,64,64,(Color){255,30,30,160});
+                if(building && building_target == 5 && matrix[i][j].type > 5) DrawRectangle(j*64,i*64,64,64,RED);
             }
         }
     }
 
     void build(int n, int m, int type){
+        if(matrix[n][m].type == 401)coal += 1+rand()%3;
+        if(matrix[n][m].type == 402)iron += 1+rand()%2;
         this->matrix[n][m].type = type;
     }
 
@@ -45,9 +47,9 @@ class Farm{
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
                 if(rand()%1000 < 2)
-                    matrix[i][j].type = 6;
+                    matrix[i][j].type = 401;
                 else if(rand()%1000 < 1)
-                    matrix[i][j].type = 7;
+                    matrix[i][j].type = 402;
                 matrix[i][j].grow();
             }
         }

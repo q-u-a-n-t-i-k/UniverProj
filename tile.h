@@ -19,13 +19,17 @@ class Tile{
         if(type != 0){
             int d_y = 0, d_x = 0;
 
-            if(type/100 == 1)
+            if(type/100 == 1){
                 Img.add(100,x,y);
+                d_y = -32;}
             
             else if(type/100 == 2){
                 Img.add(200,x,y);
                 d_y = -112;
                 d_x = -8;
+            }
+            else if(type/100 == 3){
+                Img.add(300,x,y-24);
             }
 
             if(type%10 != 0) Img.add(type,x+d_x,y+d_y);
