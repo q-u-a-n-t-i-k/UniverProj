@@ -13,7 +13,7 @@
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false, win = false;
-int money = 500, coal = 20, iron = 20, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
+int money = 50, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
 Font font;
 Farm pole;// game area(its init must be first)
 using namespace std;
@@ -33,9 +33,9 @@ void loadsave()
     ifstream file("Save.txt");
     if(!(file >> money))
     {
-        money = 5000;
-        coal = 200;
-        iron = 200;
+        money = 50;
+        coal = 0;
+        iron = 0;
         pole = Farm();
     }
     else
@@ -98,24 +98,24 @@ int main () {
     int m_x, m_y;//mouse cord
     Img.Load();//load images
 
-    Button btn(1920-64*5+60,64*15+25,200,70,40,(char*)"Continue");
+    Button btn(1660,985,200,70,40,(char*)"Continue");
     btn.default_color = GREEN;
     Button cancel(40,980,64,64,40,(char*)"X");
     cancel.default_color = RED;
 
-    Counter goldCounter(50, 1000, {50, 50}, 40, GOLD,  "resources/icons/coin.png");     // Лічильник для золота
+    Counter goldCounter(0, 10000, {1640, 50}, 40, WHITE,  "resources/icons/coin.png");     // Лічильник для золота
 
-    Counter coalCounter(0, 1000, {50, 200}, 40, BLACK,  "resources/icons/coal.png"); // Лічильник для вугілля
+    Counter coalCounter(0, 1000, {1640, 100}, 40, WHITE,  "resources/icons/coal.png"); // Лічильник для вугілля
 
-    Counter steelCounter(50, 1000, {50, 50}, 40, GOLD,  "resources/icons/steel.png");     // Лічильник для золота
+    Counter steelCounter(0, 1000, {1640, 150}, 40, WHITE,  "resources/icons/steel.png");     // Лічильник для золота
    
-    Progressbar O2(1140,965,175,50,40,5,(char*)"O2",1);
+    Progressbar O2(1660,840,200,50,40,5,(char*)"O2",1);
     O2.color_bar1 = SKYBLUE;
     O2.color_bar2 = BLUE ;
     O2.beg_color = LIGHTGRAY;
     O2.color = DARKGRAY;
 
-    Progressbar Temp(1365,965,175,50,40,5,(char*)"T(K)",1);
+    Progressbar Temp(1660,910,200,50,40,5,(char*)"T(K)",1);
     Temp.color_bar1 = RED;
     Temp.color_bar2 = YELLOW;
     Temp.beg_color = LIGHTGRAY;
@@ -133,30 +133,31 @@ int main () {
     loadsave();
 
     ar = {20,0,0,0,0};
-    shop[0] = Goods(160,980,5,100,ar,100);
+    shop[0] = Goods(200,980,5,100,ar,100);
     ar = {25,0,0,0,0};
-    shop[1] = Goods(240,980,5,200,ar,200);
+    shop[1] = Goods(300,980,5,200,ar,200);
     ar = {30,4,2,0,0};
-    shop[2] = Goods(320,980,5,300,ar,300);
+    shop[2] = Goods(400,980,5,300,ar,300);
     ar = {5,0,0,0,0};
-    shop[3] = Goods(440,980,100,101,ar,121);
+    shop[3] = Goods(550,980,100,101,ar,121);
     ar = {10,0,0,0,10};
-    shop[4] = Goods(520,980,100,102,ar,122);
+    shop[4] = Goods(650,980,100,102,ar,122);
     ar = {16,0,0,4,20};
-    shop[5] = Goods(600,980,100,103,ar,123);
+    shop[5] = Goods(750,980,100,103,ar,123);
     ar = {20,0,0,9,50};
-    shop[6] = Goods(680,980,100,104,ar,124);
+    shop[6] = Goods(850,980,100,104,ar,124);
     ar = {24,0,0,20,80};
-    shop[7] = Goods(760,980,100,105,ar,125);
+    shop[7] = Goods(950,980,100,105,ar,125);
     ar = {30,0,0,0,20};
-    shop[8] = Goods(840,980,200,201,ar,121);
+    shop[8] = Goods(1050,980,200,201,ar,121);
     ar = {15,0,0,0,0};
-    shop[9] = Goods(960,980,402,0,ar,403);
+    shop[9] = Goods(1200,980,402,0,ar,403);
     ar = {0,0,0,0,0};
-    shop[10] = Goods(1040,980,115,100,ar,404);
+    shop[10] = Goods(1300,980,115,100,ar,404);
 
     while (WindowShouldClose() == false){
         //update variables
+        UpdateMusicStream(music); 
         if(pause){
             Cont.calculate();
             NewG.calculate();
@@ -174,19 +175,24 @@ int main () {
             }
         }
         else{
-            UpdateMusicStream(music); 
-
             pole.calculate();
             Img.calculate();
             OXG();
             O2.fullbar=oxygen*5;
             T();
             Temp.fullbar=temperature;
+            goldCounter.reset(money);
+            coalCounter.reset(coal);
+            steelCounter.reset(iron);
             m_x = (GetMouseX()-GetMouseX()%64)/64;
             m_y = (GetMouseY()-GetMouseY()%64)/64;
 
             if(!building){
                 btn.calculate();
+                if(temperature==100 && oxygen ==20&&money >= 1000){
+                    win = true;
+                    newgame();
+                }
                 if(IsKeyPressed(KEY_ESCAPE)) pause = true;
                 for(int i = 0; i < 11;i++) shop[i].calculate();
                 
@@ -195,10 +201,7 @@ int main () {
                 else if(btn.pressed){ pole.nextDay();}
             }
             else{
-                if(temperature==100 && oxygen ==20&&money == 1000){
-                    win = true;
-                    newgame();
-                }
+                
                 cancel.calculate();
                 if(m_x < 25 && m_y < 15){
                     if(building_target == 5) pole.matrix[m_y][m_x].hover = 2;// border width (px)
@@ -249,6 +252,9 @@ int main () {
             else btn.Draw();
             O2.Draw();
             Temp.Draw();
+            goldCounter.draw(); 
+            coalCounter.draw();
+            steelCounter.draw();
             }
             
         EndDrawing();
