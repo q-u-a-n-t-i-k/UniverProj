@@ -18,6 +18,12 @@ Farm pole;// game area(its init must be first)
 using namespace std;
 
 int main () {
+    InitAudioDevice();              
+    Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
+    PlayMusicStream(music);
+    SetMusicVolume(music, 0.1);
+    float timePlayed = 0.0f;
+    
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
     SetExitKey(KEY_K);
@@ -31,6 +37,15 @@ int main () {
     Button cancel(40,980,64,64,40,(char*)"X");
     cancel.default_color = RED;
    
+    Progressbar O2(1140,965,175,100,40,25,"O2",1);
+    O2.color_bar = BLUE;
+    O2.beg_color = LIGHTGRAY;
+    O2.color = DARKGRAY;
+
+    Progressbar Temp(1365,965,175,100,40,25,"T(K)",1);
+    Temp.color_bar = RED;
+    Temp.beg_color = LIGHTGRAY;
+    Temp.color = DARKGRAY;
 
     array<int,5> ar;
     Goods shop[11];
@@ -81,9 +96,14 @@ int main () {
             }
         }
         else{
+            UpdateMusicStream(music); 
+            timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music);
             pole.calculate();
             Img.calculate();
-            
+            OXG(pole);
+            O2.fullbar=oxygen*5;
+            T(pole);
+            Temp.fullbar=temperature;
             m_x = (GetMouseX()-GetMouseX()%64)/64;
             m_y = (GetMouseY()-GetMouseY()%64)/64;
 
@@ -140,14 +160,17 @@ int main () {
             
             if(building) cancel.Draw();
             else btn.Draw();
+            O2.Draw();
+            Temp.Draw();
             }
             
         EndDrawing();
         
-        
     }
-
+  UnloadMusicStream(music);   // Unload music stream buffers from RAM
+    CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
     CloseWindow();
+    
 }
 
 
@@ -179,4 +202,34 @@ void loadsave()
                 file >> pole.matrix[i][j].type;
         file.close();
     }
+}
+
+void OXG(Farm pole){
+    oxygen=0;
+    for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if (pole.matrix[i][j].type == 200)
+                    oxygen+=0;
+                else if (pole.matrix[i][j].type == 201)
+                    oxygen+=1;
+                else if (pole.matrix[i][j].type == 202)
+                    oxygen+=2;
+                else if (pole.matrix[i][j].type == 203)
+                    oxygen+=2;
+                else if (pole.matrix[i][j].type == 204)
+                    oxygen+=2;
+            }
+        }
+        if (oxygen>20) oxygen =20;
+}
+
+void T(Farm pole){
+    temperature = 0;
+    for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if (pole.matrix[i][j].type == 300)
+                    temperature +=10;
+            }
+        }
+    if (temperature>100) temperature =100;
 }
