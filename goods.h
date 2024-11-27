@@ -8,7 +8,7 @@
 class Goods{
     public:
         
-        int type, target, x, y, img,n;
+        int type, target, x, y, img,n=0;
         Color col = GREEN;
         Color sign_col[5] = {YELLOW,BLACK,WHITE,BLUE,ORANGE};
         string sign[5] = {"M","C","I","O","T"};
