@@ -12,7 +12,7 @@
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false;
-int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
+int money = 50, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
 Font font;
 Farm pole;// game area(its init must be first)
 using namespace std;
@@ -27,6 +27,12 @@ void savefile()
     file.close();
 }
 
+void newgame(){
+    ofstream file("Save.txt");
+    file.close();
+    pause = false;
+    loadsave();
+}
 void loadsave()
 {
     ifstream file("Save.txt");
@@ -81,7 +87,7 @@ int main () {
     InitAudioDevice();              
     Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
     PlayMusicStream(music);
-    SetMusicVolume(music, 0.1);
+    SetMusicVolume(music, 0);
     
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
@@ -117,25 +123,25 @@ int main () {
     Save.default_color = DARKGRAY;
     loadsave();
 
-    ar = {25,0,0,0,0};
+    ar = {20,0,0,0,0};
     shop[0] = Goods(160,980,5,100,ar,100);
     ar = {25,0,0,0,0};
     shop[1] = Goods(240,980,5,200,ar,200);
-    ar = {50,4,1,0,0};
+    ar = {30,4,2,0,0};
     shop[2] = Goods(320,980,5,300,ar,300);
-    ar = {25,0,0,0,0};
+    ar = {5,0,0,0,0};
     shop[3] = Goods(440,980,100,101,ar,121);
-    ar = {25,0,0,0,0};
+    ar = {10,0,0,0,10};
     shop[4] = Goods(520,980,100,102,ar,122);
-    ar = {25,0,0,0,0};
+    ar = {16,0,0,4,20};
     shop[5] = Goods(600,980,100,103,ar,123);
-    ar = {25,0,0,0,0};
+    ar = {20,0,0,9,50};
     shop[6] = Goods(680,980,100,104,ar,124);
-    ar = {25,0,0,0,0};
+    ar = {24,0,0,20,80};
     shop[7] = Goods(760,980,100,105,ar,125);
-    ar = {25,0,0,0,0};
+    ar = {30,0,0,0,20};
     shop[8] = Goods(840,980,200,201,ar,121);
-    ar = {25,0,0,0,0};
+    ar = {15,0,0,0,0};
     shop[9] = Goods(960,980,402,0,ar,403);
     ar = {0,0,0,0,0};
     shop[10] = Goods(1040,980,115,100,ar,404);
@@ -150,10 +156,7 @@ int main () {
                 pause = false;
             else if(NewG.pressed)
             {
-                ofstream file("Save.txt");
-                file.close();
-                pause = false;
-                loadsave();
+                newgame();
             }
             else if(Save.pressed)
             {
@@ -218,8 +221,9 @@ int main () {
             DrawRectangle(0,64*15,1920,120,GRAY);
 
             pole.draw();
-            for(int i = 0; i < 11;i++) shop[i].draw();
+            
             pole.draw_building();
+            for(int i = 0; i < 11;i++) shop[i].draw();
             Img.draw(building,building_target);       
 
             

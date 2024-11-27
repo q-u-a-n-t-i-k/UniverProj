@@ -10,14 +10,11 @@ class Farm{
  
 
     Farm(){
-        for(int i = 0; i < 5; i++){
-            matrix[5][6+i].type=200;
-        }
-        for(int i = 0; i < 5; i++){
-            matrix[7][6+i].type=100;
-        }
-        for(int i = 1; i < 6; i++){
-            matrix[9][5+i].type=i;
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if(rand()%100 < 5)
+                    matrix[i][j].type = 1+rand()%5;
+            }
         }
     }
 
@@ -40,6 +37,7 @@ class Farm{
     void build(int n, int m, int type){
         if(matrix[n][m].type == 401)coal += 1+rand()%3;
         if(matrix[n][m].type == 402)iron += 1+rand()%2;
+        if(matrix[n][m].type/100==1&&matrix[n][m].type>110)money += 8*matrix[n][m].type%10;
         this->matrix[n][m].type = type;
     }
 
