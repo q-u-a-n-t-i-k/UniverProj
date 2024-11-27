@@ -12,9 +12,15 @@ private:
     int fontSize;    // Розмір тексту
     Color textColor; // Колір тексту
    std::string customText;     // текст
+   Texture2D resourceImage;
+   float scale;
+   int spacing = 10;
 public:
-    Counter(int initialValue, int maxValue, Vector2 position, int fontSize, Color textColor,const std::string& customText ="")
-        : value(initialValue), maxValue(maxValue), position(position), fontSize(fontSize), textColor(textColor),customText(customText) {}
+    Counter(int initialValue, int maxValue, Vector2 position, int fontSize, Color textColor, const char *resourceImageFile)
+        : value(initialValue), maxValue(maxValue), position(position), fontSize(fontSize), textColor(textColor) {
+            resourceImage = LoadTexture(resourceImageFile);
+            scale = (float)fontSize/resourceImage.height;
+        }
 
     // Збільшити лічильник(amount треба тільки потрібний поставити)
     void increment(int amount) {
@@ -39,10 +45,6 @@ public:
         value = newValue;
     }
 
-    void setCustomText(const std::string& text) { 
-        customText = text;
-         }
-
     // Отримати поточне значення
     int getValue() const {
         return value;
@@ -58,8 +60,13 @@ public:
     }
 
     // Відобразити лічильник на 
-    void draw() const { std::string displayText = customText.empty() ? std::to_string(value) : customText + ": " + std::to_string(value);
-     DrawText(displayText.c_str(), position.x, position.y, fontSize, textColor); }
+    void draw() const {
+        Vector2 origin =(Vector2){ 0, 0 };
+
+        DrawTextureEx(resourceImage, position, 0.0f, scale, textColor);
+
+        DrawText(std::to_string(value).c_str(), position.x + fontSize + spacing, position.y, fontSize, textColor);
+    }
 };
 
 #endif // COUNTER_H
