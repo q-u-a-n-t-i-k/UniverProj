@@ -14,22 +14,23 @@ class Textures{
         array<Texture2D,6> plants[3];
         array<Texture2D,6> ground;
         array<Texture2D,5> trees;
-        array<Texture2D,3> meteor;
+        array<Texture2D,4> resources;
 
         Texture2D get_texture(int type){
             if((int)type/100 == 0) return ground[type];
             else if((int)(type/100) == 1) return plants[(type-100)/10][type%10];
             else if((int)(type/100) == 2) return trees[type%10];
             else if((int)(type/100) == 3) return heater;
-            else if((int)(type/100) == 4) return meteor[type%10-1];
+            else if((int)(type/100) == 4) return resources[type%10-1];
             return ground[0];
         }
     public:
         void Load(){
             heater = LoadTexture("resources/textures/heater.png");
-            meteor={LoadTexture("resources/textures/6.png"),
+            resources={LoadTexture("resources/textures/6.png"),
                     LoadTexture("resources/textures/7.png"),
-                    LoadTexture("resources/textures/pickaxe.png")};
+                    LoadTexture("resources/textures/pickaxe.png"),
+                    LoadTexture("resources/textures/sickle.png")};
             plants[0]={
                 LoadTexture("resources/textures/bed.png"),
                 LoadTexture("resources/textures/wheat_0.png"),

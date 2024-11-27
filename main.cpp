@@ -48,7 +48,7 @@ int main () {
 
     shop[9] = Goods(960,980,402,0,ar,403);
     ar = {0,0,0,0,0};
-    shop[10] = Goods(1040,980,115,100,ar,403);
+    shop[10] = Goods(1040,980,115,100,ar,404);
 
     while (WindowShouldClose() == false){
         if(pause){
