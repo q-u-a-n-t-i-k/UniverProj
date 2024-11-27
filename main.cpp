@@ -12,7 +12,7 @@
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false;
-int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200;
+int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
 Font font;
 Farm pole;// game area(its init must be first)
 using namespace std;
@@ -50,6 +50,7 @@ void loadsave()
 int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
+    SetExitKey(KEY_K);
     font =  LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0);
     int m_x, m_y;//mouse cord
     Img.Load();//load images
@@ -70,7 +71,6 @@ int main () {
     NewG.default_color = DARKGRAY;
     Button Save(700,650,500,145,40,(char*)"Save");
     Save.default_color = DARKGRAY;
-    array<int,5> ar;
     loadsave();
 
     ar = {25,0,0,0,0};
@@ -119,6 +119,7 @@ int main () {
 
             if(!building){
                 btn.calculate();
+                if(IsKeyPressed(KEY_ESCAPE)) pause = true;
                 for(int i = 0; i < 11;i++) shop[i].calculate();
                 
                 if(m_x < 25 && m_y < 15)
@@ -127,7 +128,6 @@ int main () {
             }
             else{
                 cancel.calculate();
-                if(IsKeyPressed(KEY_ESCAPE)) pause = true;
                 if(m_x < 25 && m_y < 15){
                     if(building_target == 5) pole.matrix[m_y][m_x].hover = 2;// border width (px)
                     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
@@ -179,4 +179,3 @@ int main () {
 
     CloseWindow();
 }
-
