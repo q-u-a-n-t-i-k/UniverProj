@@ -1,9 +1,13 @@
+#ifndef BUTTON_H
+#define BUTTON_H
+
 #include <raylib.h>
+#include "properties.h"
 
 class Button{
     public:
         float pos_x, pos_y;
-        int width, height;
+        int w, h;
         int font_size, len;
         char * text;
         bool hover = false, pressed=false, down = true;
@@ -12,17 +16,17 @@ class Button{
 
 
         void Draw(){
-            DrawRectangle(pos_x,pos_y,width,height,color);
+            DrawRectangle(pos_x,pos_y,w,h,color);
             int t_w = MeasureText(text,font_size);
-            DrawTextEx(font,text,(Vector2){ pos_x+(width-t_w)/2, pos_y+(height-font.baseSize)/2},font_size,0,text_color);
+            DrawTextEx(font,text,(Vector2){ pos_x+(w-t_w)/2, pos_y+(h-font.baseSize)/2},font_size,0,text_color);
         }
         
-        void Calculate(){
+        void calculate(){
             pressed = false;
             hover = false;
             down = false;
 
-            if(GetMouseX() > pos_x && GetMouseX() < pos_x+width && GetMouseY() > pos_y && GetMouseY() < pos_y + height){
+            if(GetMouseX() > pos_x && GetMouseX() < pos_x+w && GetMouseY() > pos_y && GetMouseY() < pos_y + h){
                 hover = true;
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) pressed = true;
                 if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) down = true;}
@@ -36,9 +40,10 @@ class Button{
         Button(float x, float y, int w, int h, int f_s, char t[]){
             pos_x = x;
             pos_y = y;
-            width = w;
-            height = h;
+            this->w = w;
+            this->h = h;
             text = t;
             font_size = f_s;
         }
 };
+#endif
