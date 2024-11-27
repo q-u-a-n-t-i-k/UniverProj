@@ -17,36 +17,6 @@ Font font;
 Farm pole;// game area(its init must be first)
 using namespace std;
 
-void savefile()
-{
-    ofstream file("Save.txt");
-    file << money << '\n' << coal << '\n' << iron << '\n';
-    for(int i = 0; i < height; i++)
-        for(int j = 0; j < width; j++)
-            file << pole.matrix[i][j].type << ' ';
-    file.close();
-}
-
-void loadsave()
-{
-    ifstream file("Save.txt");
-    if(!(file >> money))
-    {
-        money = 50;
-        coal = 0;
-        iron = 0;
-        pole = Farm();
-    }
-    else
-    {
-        file >> coal >> iron;
-        for(int i = 0; i < height; i++)
-            for(int j = 0; j < width; j++)
-                file >> pole.matrix[i][j].type;
-        file.close();
-    }
-}
-
 int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
@@ -178,4 +148,35 @@ int main () {
     }
 
     CloseWindow();
+}
+
+
+void savefile()
+{
+    ofstream file("Save.txt");
+    file << money << '\n' << coal << '\n' << iron << '\n';
+    for(int i = 0; i < height; i++)
+        for(int j = 0; j < width; j++)
+            file << pole.matrix[i][j].type << ' ';
+    file.close();
+}
+
+void loadsave()
+{
+    ifstream file("Save.txt");
+    if(!(file >> money))
+    {
+        money = 50;
+        coal = 0;
+        iron = 0;
+        pole = Farm();
+    }
+    else
+    {
+        file >> coal >> iron;
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+                file >> pole.matrix[i][j].type;
+        file.close();
+    }
 }
