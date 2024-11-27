@@ -11,7 +11,7 @@
 
 // init val for externs in properties
 Textures Img;
-bool building = false;
+bool building = false, pause =false;
 int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200;
 
 using namespace std;
@@ -45,9 +45,12 @@ int main () {
 
     while (WindowShouldClose() == false){
         //update variables
-        pole.calculate();//(must be first)
-
         
+        if(pause){
+            
+        }
+        else{
+        pole.calculate();//(must be first)
         btn.calculate();
         for(int i = 0; i < 10;i++) shop[i].calculate();
         
@@ -66,10 +69,14 @@ int main () {
                     building = false;}
             }
         }
-        else if(btn.pressed){ pole.nextDay();}
+        else if(btn.pressed){ pole.nextDay();}}
         
         //drawing
         BeginDrawing();
+            if(pause){
+
+            }
+            else{
             ClearBackground(GREEN);
             if(building) ClearBackground(YELLOW);
             
@@ -82,7 +89,7 @@ int main () {
             Img.draw(building,building_target);       
 
             btn.Draw();
-            
+            }
             
         EndDrawing();
         

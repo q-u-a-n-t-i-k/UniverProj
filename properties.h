@@ -5,7 +5,7 @@
 #include "textures.h"
 //global var
 extern Textures Img;
-extern bool building;
+extern bool building, pause;
 extern int money, coal, iron, oxygen, temperature, building_type, building_target;
 
 //const var
