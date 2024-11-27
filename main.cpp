@@ -34,8 +34,7 @@ void loadsave()
         money = 50;
         coal = 0;
         iron = 0;
-        Farm currcastyl;
-        pole = currcastyl;
+        pole = Farm();
     }
     else
     {
