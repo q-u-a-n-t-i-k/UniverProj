@@ -36,12 +36,12 @@ class Goods{
             hover = false;
             if(GetMouseX() > x && GetMouseX() < x+64 && GetMouseY() > y && GetMouseY() < y + 64){
                 hover = true;
-                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && ! building) press();
+                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) press();
             }
         }
 
         void draw(){
-            if(hover && !building){
+            if(hover){
                 int ar[5]={money,coal,iron,oxygen,temperature};
                 DrawRectangle(x-32*(n-1),y-56,64*n,48,(Color){25, 51, 77,255});
                 int k = 0;
@@ -54,16 +54,17 @@ class Goods{
                     k++;
                 }
             }
-            Img.add(img,x,y);
+            if(building && building_type != type) Img.add(img,x,y, 160);
+            else Img.add(img,x,y);
         }
         void press(){
             if(money >= req[0] && coal >= req[1] && iron >= req[2] && oxygen >= req[3] && temperature >= req[4]){
                 building = true;
                 building_type = type;
                 building_target = target;
-                money -= req[0];
-                coal -= req[1];
-                iron -= req[2];
+                requi[0] = req[0];
+                requi[1] = req[1];
+                requi[2] = req[2];
             }
             
         }

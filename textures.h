@@ -9,7 +9,7 @@ using namespace std;
 
 class Textures{
     private:
-        vector<array<int,3>> draw_queue;
+        vector<array<int,4>> draw_queue;
         Texture2D heater;
         array<Texture2D,6> plants[3];
         array<Texture2D,6> ground;
@@ -69,8 +69,8 @@ class Textures{
                 LoadTexture("resources/textures/204.png")};
         }
 
-        void add(int type, int x, int y){
-            array<int,3> a = {type,x,y};
+        void add(int type, int x, int y, int al = 255){
+            array<int,4> a = {type,x,y,al};
             draw_queue.push_back(a);
         }
 
@@ -79,7 +79,7 @@ class Textures{
         }
         void draw(bool building, int building_target){
             for (int i = 0; i < (int)draw_queue.size(); i++) {
-                Color col = WHITE;
+                Color col = (Color){255,255,255,draw_queue[i][3]};
                 //if(building && not (building_target/100 == draw_queue[i][0]/100 && draw_queue[i][0] <= building_target)&&building_target==5) col = (Color){255,80,80,255};
                 DrawTexture(get_texture(draw_queue[i][0]),draw_queue[i][1],draw_queue[i][2],col);
             }
