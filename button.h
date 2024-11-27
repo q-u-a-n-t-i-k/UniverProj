@@ -12,7 +12,6 @@ class Button{
         char * text;
         bool hover = false, pressed=false, down = true;
         Color color, default_color = GRAY, hover_color = LIGHTGRAY, pressed_color = DARKGRAY, text_color = BLACK;
-        Font font = LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0);
 
 
         void Draw(){
