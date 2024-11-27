@@ -9,6 +9,7 @@
 #include "button.h"
 #include "farm.h"
 #include "goods.h"
+#include "Counter.h"
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false, win = false;
@@ -99,9 +100,14 @@ int main () {
 
     Button btn(1920-64*5+60,64*15+25,200,70,40,(char*)"Continue");
     btn.default_color = GREEN;
-
     Button cancel(40,980,64,64,40,(char*)"X");
     cancel.default_color = RED;
+
+    Counter goldCounter(50, 1000, {50, 50}, 40, GOLD,  "resources/icons/coin.png");     // Лічильник для золота
+
+    Counter coalCounter(0, 1000, {50, 200}, 40, BLACK,  "resources/icons/coal.png"); // Лічильник для вугілля
+
+    Counter steelCounter(50, 1000, {50, 50}, 40, GOLD,  "resources/icons/steel.png");     // Лічильник для золота
    
     Progressbar O2(1140,965,175,50,40,5,(char*)"O2",1);
     O2.color_bar1 = SKYBLUE;
