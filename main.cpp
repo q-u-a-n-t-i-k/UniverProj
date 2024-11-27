@@ -8,19 +8,48 @@
 #include "button.h"
 #include "farm.h"
 #include "goods.h"
-
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false;
 int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200;
 Font font;
+Farm pole;// game area(its init must be first)
 using namespace std;
 
-int main () {
+void savefile()
+{
+    ofstream file("Save.txt");
+    file << money << '\n' << coal << '\n' << iron << '\n';
+    for(int i = 0; i < height; i++)
+        for(int j = 0; j < width; j++)
+            file << pole.matrix[i][j].type << ' ';
+    file.close();
+}
 
+void loadsave()
+{
+    ifstream file("Save.txt");
+    if(!(file >> money))
+    {
+        money = 50;
+        coal = 0;
+        iron = 0;
+        Farm currcastyl;
+        pole = currcastyl;
+    }
+    else
+    {
+        file >> coal >> iron;
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+                file >> pole.matrix[i][j].type;
+        file.close();
+    }
+}
+
+int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
-    Farm pole;// game area(its init must be first)
     font =  LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0);
     int m_x, m_y;//mouse cord
     Img.Load();//load images
@@ -35,6 +64,7 @@ int main () {
     Button Save(700,650,500,145,40,(char*)"Save");
     Save.default_color = DARKGRAY;
     array<int,5> ar;
+    loadsave();
     Goods shop[10];
     ar = {25,0,0,0,0};
     shop[0] = Goods(160,980,5,100,ar,100);
@@ -64,15 +94,11 @@ int main () {
                 ofstream file("Save.txt");
                 file.close();
                 pause = false;
+                loadsave();
             }
             else if(Save.pressed)
             {
-                ofstream file("Save.txt");
-                file << money << '\n' << coal << '\n' << iron << '\n';
-                for(int i = 0; i < height; i++)
-                    for(int j = 0; j < width; j++)
-                        file << pole.matrix[i][j].type << ' ';
-                file.close();
+                savefile();
                 break;
             }
         }
