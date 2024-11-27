@@ -50,9 +50,8 @@ int main () {
     InitAudioDevice();              
     Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
     PlayMusicStream(music);
-    SetMusicVolume(music, 0.2);
-    float timePlayed = 0.0f;
-    
+    SetMusicVolume(music, 0.1);
+
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
     Farm pole;// game area(its init must be first)
@@ -65,13 +64,15 @@ int main () {
     Button cancel(40,980,64,64,40,(char*)"X");
     cancel.default_color = RED;
    
-    Progressbar O2(1140,965,175,100,40,25,"O2",1);
-    O2.color_bar = BLUE;
+    Progressbar O2(1140,965,175,100,40,20,"O2",1);
+    O2.color_bar1 = SKYBLUE;
+    O2.color_bar2 = BLUE ;
     O2.beg_color = LIGHTGRAY;
     O2.color = DARKGRAY;
 
-    Progressbar Temp(1365,965,175,100,40,25,"T(K)",1);
-    Temp.color_bar = RED;
+    Progressbar Temp(1365,965,175,100,40,20,"T(K)",1);
+    Temp.color_bar1 = RED;
+    Temp.color_bar2 = YELLOW;
     Temp.beg_color = LIGHTGRAY;
     Temp.color = DARKGRAY;
 
@@ -100,7 +101,7 @@ int main () {
         }
         else{
             UpdateMusicStream(music); 
-            timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music);
+
             pole.calculate();
             Img.calculate();
             OXG(pole);
