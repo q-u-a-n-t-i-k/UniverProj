@@ -1,14 +1,10 @@
 #include <iostream>
 #include <raylib.h>
 #include <cmath>
-<<<<<<< HEAD
-#include "progresbar.cpp"
-#include "properties.cpp"
-#include "button.cpp"
-=======
 #include <array>
 
 #include "properties.h"
+#include "progresbar.h"
 #include "textures.h"
 #include "button.h"
 #include "farm.h"
@@ -17,43 +13,43 @@
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false;
-int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
->>>>>>> main
+int money = 2000, coal = 100, iron = 100, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
 
 using namespace std;
+
+void OXG(Farm pole){
+    oxygen=0;
+    for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if (pole.matrix[i][j].type == 200)
+                    oxygen+=0;
+                else if (pole.matrix[i][j].type == 201)
+                    oxygen+=1;
+                else if (pole.matrix[i][j].type == 202)
+                    oxygen+=2;
+                else if (pole.matrix[i][j].type == 203)
+                    oxygen+=2;
+                else if (pole.matrix[i][j].type == 204)
+                    oxygen+=2;
+            }
+        }
+        if (oxygen>20) oxygen =20;
+}
+void T(Farm pole){
+    temperature = 0;
+    for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if (pole.matrix[i][j].type == 300)
+                    temperature +=10;
+            }
+        }
+    if (temperature>100) temperature =100;
+}
 
 int main () {
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
-<<<<<<< HEAD
-    Button btn(100,100,200,75,40,(char*)"Button");
-    Progressbar pr(200, 200, 200, 75, 40, 25, (char*)"LALA",1);
-    pr.color =  GRAY;
-    pr.beg_color =  LIGHTGRAY;
-    pr.color_bar =  RED;
-    pr.fullbar = 50;
-    InitAudioDevice();              
-    Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
-    PlayMusicStream(music);
-    SetMusicVolume(music, 0.2);
-    float timePlayed = 0.0f;
-    
-    while (WindowShouldClose() == false){
-        UpdateMusicStream(music); 
-        timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music);
-        btn.Calculate();
-        BeginDrawing();
-        ClearBackground(LIME);
-            btn.Draw();
-            pr.Draw();
-            DrawRectangle(1920-64*5,0,64*5,1080,GRAY);
-            DrawRectangle(0,64*15,1920,120,GRAY);
-            for(int i = 0; i < 25; i++){
-                for(int j = 0; j < 15; j++){
-                    if((i+j)%2 == 1) DrawRectangle(i*64,j*64,64,64,ORANGE);
-                }
-=======
     Farm pole;// game area(its init must be first)
     int m_x, m_y;//mouse cord
     Img.Load();//load images
@@ -64,6 +60,15 @@ int main () {
     Button cancel(40,980,64,64,40,(char*)"X");
     cancel.default_color = RED;
    
+    Progressbar O2(1140,965,175,100,40,25,"O2",1);
+    O2.color_bar = BLUE;
+    O2.beg_color = LIGHTGRAY;
+    O2.color = DARKGRAY;
+
+    Progressbar Temp(1365,965,175,100,40,25,"T(K)",1);
+    Temp.color_bar = RED;
+    Temp.beg_color = LIGHTGRAY;
+    Temp.color = DARKGRAY;
 
     array<int,5> ar;
     Goods shop[11];
@@ -91,7 +96,10 @@ int main () {
         else{
             pole.calculate();
             Img.calculate();
-            
+            OXG(pole);
+            O2.fullbar=oxygen*5;
+            T(pole);
+            Temp.fullbar=temperature;
             m_x = (GetMouseX()-GetMouseX()%64)/64;
             m_y = (GetMouseY()-GetMouseY()%64)/64;
 
@@ -125,7 +133,7 @@ int main () {
         //drawing
         BeginDrawing();
             if(pause){
-
+            
             }
             else{
             ClearBackground(GREEN);
@@ -142,21 +150,12 @@ int main () {
             
             if(building) cancel.Draw();
             else btn.Draw();
->>>>>>> main
+            O2.Draw();
+            Temp.Draw();
             }
             
         
         EndDrawing();
-<<<<<<< HEAD
-         
-    }
-
-    UnloadMusicStream(music);   // Unload music stream buffers from RAM
-    CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
-    CloseWindow();    
-    return 0;   
-}
-=======
         
         
     }
@@ -164,4 +163,3 @@ int main () {
     CloseWindow();
 }
 
->>>>>>> main
