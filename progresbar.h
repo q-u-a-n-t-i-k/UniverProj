@@ -47,3 +47,4 @@ class Progressbar{
             thickness = th;
         }
 };
+#endif

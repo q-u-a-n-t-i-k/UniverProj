@@ -4,6 +4,7 @@
 #include <array>
 
 #include "properties.h"
+#include "progresbar.h"
 #include "textures.h"
 #include "button.h"
 #include "farm.h"
