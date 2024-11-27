@@ -12,7 +12,7 @@
 // init val for externs in properties
 Textures Img;
 bool building = false, pause =false, win = false;
-int money = 50, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
+int money = 500, coal = 20, iron = 20, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
 Font font;
 Farm pole;// game area(its init must be first)
 using namespace std;
@@ -32,9 +32,9 @@ void loadsave()
     ifstream file("Save.txt");
     if(!(file >> money))
     {
-        money = 50;
-        coal = 0;
-        iron = 0;
+        money = 5000;
+        coal = 200;
+        iron = 200;
         pole = Farm();
     }
     else
@@ -104,12 +104,14 @@ int main () {
     cancel.default_color = RED;
    
     Progressbar O2(1140,965,175,50,40,5,(char*)"O2",1);
-    O2.color_bar = BLUE;
+    O2.color_bar1 = SKYBLUE;
+    O2.color_bar2 = BLUE ;
     O2.beg_color = LIGHTGRAY;
     O2.color = DARKGRAY;
 
     Progressbar Temp(1365,965,175,50,40,5,(char*)"T(K)",1);
-    Temp.color_bar = RED;
+    Temp.color_bar1 = RED;
+    Temp.color_bar2 = YELLOW;
     Temp.beg_color = LIGHTGRAY;
     Temp.color = DARKGRAY;
 
@@ -167,6 +169,7 @@ int main () {
         }
         else{
             UpdateMusicStream(music); 
+
             pole.calculate();
             Img.calculate();
             OXG();
