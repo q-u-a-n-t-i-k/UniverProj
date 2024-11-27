@@ -35,6 +35,7 @@ class Farm{
     }
 
     void build(int n, int m, int type){
+        if(type == 500) win = true;
         if(matrix[n][m].type == 401)coal += 1+rand()%3;
         if(matrix[n][m].type == 402)iron += 1+rand()%2;
         if(matrix[n][m].type/100==1&&matrix[n][m].type>110)money += 8*matrix[n][m].type%10;

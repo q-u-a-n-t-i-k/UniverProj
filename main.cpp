@@ -11,7 +11,7 @@
 #include "goods.h"
 // init val for externs in properties
 Textures Img;
-bool building = false, pause =false;
+bool building = false, pause =false, win = false;
 int money = 50, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200, requi[3];
 Font font;
 Farm pole;// game area(its init must be first)
@@ -27,12 +27,6 @@ void savefile()
     file.close();
 }
 
-void newgame(){
-    ofstream file("Save.txt");
-    file.close();
-    pause = false;
-    loadsave();
-}
 void loadsave()
 {
     ifstream file("Save.txt");
@@ -51,6 +45,13 @@ void loadsave()
                 file >> pole.matrix[i][j].type;
         file.close();
     }
+}
+
+void newgame(){
+    ofstream file("Save.txt");
+    file.close();
+    pause = false;
+    loadsave();
 }
 
 void OXG(){
@@ -185,6 +186,10 @@ int main () {
                 else if(btn.pressed){ pole.nextDay();}
             }
             else{
+                if(temperature==100 && oxygen ==20&&money == 1000){
+                    win = true;
+                    newgame();
+                }
                 cancel.calculate();
                 if(m_x < 25 && m_y < 15){
                     if(building_target == 5) pole.matrix[m_y][m_x].hover = 2;// border width (px)
@@ -205,7 +210,11 @@ int main () {
         
         //drawing
         BeginDrawing();
-            if(pause){
+            if (win){
+                ClearBackground(DARKGRAY);
+                DrawTextEx(font,"You Win", (Vector2){620, 444}, 192, 0, WHITE);
+            }
+            else if(pause){
                 DrawRectangle(700,200,500,600,GRAY);
                 DrawRectangle(700,200,500,145,LIGHTGRAY);
                 DrawTextEx(font,"MENU", (Vector2){775, 175}, 150, 0, DARKGRAY);
