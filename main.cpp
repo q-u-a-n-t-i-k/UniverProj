@@ -32,7 +32,7 @@ int main () {
    
 
     array<int,5> ar;
-    Goods shop[10];
+    Goods shop[11];
     ar = {25,0,0,0,0};
     shop[0] = Goods(160,980,5,100,ar,100);
     shop[1] = Goods(240,980,5,200,ar,200);
@@ -47,6 +47,8 @@ int main () {
     shop[8] = Goods(840,980,200,201,ar,121);
 
     shop[9] = Goods(960,980,402,0,ar,403);
+    ar = {0,0,0,0,0};
+    shop[10] = Goods(1040,980,115,100,ar,403);
 
     while (WindowShouldClose() == false){
         if(pause){
@@ -61,7 +63,7 @@ int main () {
 
             if(!building){
                 btn.calculate();
-                for(int i = 0; i < 10;i++) shop[i].calculate();
+                for(int i = 0; i < 11;i++) shop[i].calculate();
                 
                 if(m_x < 25 && m_y < 15)
                     pole.matrix[m_y][m_x].hover = 2;// border width (px)
@@ -72,7 +74,7 @@ int main () {
                 if(m_x < 25 && m_y < 15){
                     if(building_target == 5) pole.matrix[m_y][m_x].hover = 2;// border width (px)
                     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                        if(building_target/100 == pole.matrix[m_y][m_x].type/100 && pole.matrix[m_y][m_x].type <= building_target){
+                        if(building_target/100 == pole.matrix[m_y][m_x].type/100 && (building_target/10)%10 == (pole.matrix[m_y][m_x].type/10)%10 && pole.matrix[m_y][m_x].type <= building_target){
                             if(money >= requi[0] && coal >= requi[1] && iron >= requi[2]){
                             pole.build(m_y,m_x,building_type);
                             money -= requi[0];
@@ -99,12 +101,13 @@ int main () {
             DrawRectangle(0,64*15,1920,120,GRAY);
 
             pole.draw();
-            for(int i = 0; i < 10;i++) shop[i].draw();
+            for(int i = 0; i < 11;i++) shop[i].draw();
             pole.draw_building();
             Img.draw(building,building_target);       
 
-            btn.Draw();
+            
             if(building) cancel.Draw();
+            else btn.Draw();
             }
             
         EndDrawing();

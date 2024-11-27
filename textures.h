@@ -80,7 +80,6 @@ class Textures{
         void draw(bool building, int building_target){
             for (int i = 0; i < (int)draw_queue.size(); i++) {
                 Color col = (Color){255,255,255,draw_queue[i][3]};
-                //if(building && not (building_target/100 == draw_queue[i][0]/100 && draw_queue[i][0] <= building_target)&&building_target==5) col = (Color){255,80,80,255};
                 DrawTexture(get_texture(draw_queue[i][0]),draw_queue[i][1],draw_queue[i][2],col);
             }
         }
