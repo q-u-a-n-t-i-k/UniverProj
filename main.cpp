@@ -13,7 +13,7 @@
 Textures Img;
 bool building = false, pause =false;
 int money = 2000, coal = 0, iron = 0, oxygen = 0, temperature = 0, building_target = 5, building_type = 200;
-
+Font font;
 using namespace std;
 
 int main () {
@@ -21,6 +21,7 @@ int main () {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
     Farm pole;// game area(its init must be first)
+    font =  LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0);
     int m_x, m_y;//mouse cord
     Img.Load();//load images
     Button btn(1920-64*5+60,64*15+25,200,70,40,(char*)"Continue");
@@ -62,6 +63,7 @@ int main () {
             {
                 ofstream file("Save.txt");
                 file.close();
+                pause = false;
             }
             else if(Save.pressed)
             {
@@ -104,7 +106,7 @@ int main () {
             if(pause){
                 DrawRectangle(700,200,500,600,GRAY);
                 DrawRectangle(700,200,500,145,LIGHTGRAY);
-                DrawTextEx(LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0),"MENU", (Vector2){775, 175}, 150, 0, DARKGRAY);
+                DrawTextEx(font,"MENU", (Vector2){775, 175}, 150, 0, DARKGRAY);
                 Cont.Draw();
                 NewG.Draw();
                 Save.Draw();

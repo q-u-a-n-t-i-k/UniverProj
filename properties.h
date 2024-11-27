@@ -7,7 +7,7 @@
 extern Textures Img;
 extern bool building, pause;
 extern int money, coal, iron, oxygen, temperature, building_type, building_target;
-
+extern Font font;
 //const var
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
