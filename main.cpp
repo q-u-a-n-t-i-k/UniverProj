@@ -47,7 +47,12 @@ void T(Farm pole){
 }
 
 int main () {
-
+    InitAudioDevice();              
+    Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
+    PlayMusicStream(music);
+    SetMusicVolume(music, 0.2);
+    float timePlayed = 0.0f;
+    
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
     Farm pole;// game area(its init must be first)
@@ -94,6 +99,8 @@ int main () {
             
         }
         else{
+            UpdateMusicStream(music); 
+            timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music);
             pole.calculate();
             Img.calculate();
             OXG(pole);
@@ -159,7 +166,9 @@ int main () {
         
         
     }
-
+  UnloadMusicStream(music);   // Unload music stream buffers from RAM
+    CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
     CloseWindow();
+    
 }
 
