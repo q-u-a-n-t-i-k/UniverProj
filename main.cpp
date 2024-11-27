@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <cmath>
 #include <array>
-
+#include <fstream>
 #include "properties.h"
 #include "textures.h"
 #include "button.h"
@@ -25,7 +25,14 @@ int main () {
     Img.Load();//load images
     Button btn(1920-64*5+60,64*15+25,200,70,40,(char*)"Continue");
     btn.default_color = GREEN;
-
+    Button menu(1760,0,180,70,40,(char*)"Menu");
+    menu.default_color = BROWN;
+    Button Cont(700,350,500,145,40,(char*)"Continue");
+    Cont.default_color = DARKGRAY;
+    Button NewG(700,500,500,145,40,(char*)"New Game");
+    NewG.default_color = DARKGRAY;
+    Button Save(700,650,500,145,40,(char*)"Save");
+    Save.default_color = DARKGRAY;
     array<int,5> ar;
     Goods shop[10];
     ar = {25,0,0,0,0};
@@ -45,13 +52,32 @@ int main () {
 
     while (WindowShouldClose() == false){
         //update variables
-        
         if(pause){
-            
+            Cont.calculate();
+            NewG.calculate();
+            Save.calculate();
+            if(Cont.pressed)
+                pause = false;
+            else if(NewG.pressed)
+            {
+                ofstream file("Save.txt");
+                file.close();
+            }
+            else if(Save.pressed)
+            {
+                ofstream file("Save.txt");
+                file << money << '\n' << coal << '\n' << iron << '\n';
+                for(int i = 0; i < height; i++)
+                    for(int j = 0; j < width; j++)
+                        file << pole.matrix[i][j].type << ' ';
+                file.close();
+                break;
+            }
         }
         else{
         pole.calculate();//(must be first)
         btn.calculate();
+        menu.calculate();
         for(int i = 0; i < 10;i++) shop[i].calculate();
         
         Img.calculate();
@@ -69,12 +95,19 @@ int main () {
                     building = false;}
             }
         }
-        else if(btn.pressed){ pole.nextDay();}}
-        
+        else if(btn.pressed){ pole.nextDay();}
+        else if(menu.pressed){
+            pause = true;
+        }}
         //drawing
         BeginDrawing();
             if(pause){
-
+                DrawRectangle(700,200,500,600,GRAY);
+                DrawRectangle(700,200,500,145,LIGHTGRAY);
+                DrawTextEx(LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0),"MENU", (Vector2){775, 175}, 150, 0, DARKGRAY);
+                Cont.Draw();
+                NewG.Draw();
+                Save.Draw();
             }
             else{
             ClearBackground(GREEN);
@@ -89,6 +122,7 @@ int main () {
             Img.draw(building,building_target);       
 
             btn.Draw();
+            menu.Draw();
             }
             
         EndDrawing();
