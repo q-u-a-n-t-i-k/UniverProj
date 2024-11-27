@@ -17,12 +17,71 @@ Font font;
 Farm pole;// game area(its init must be first)
 using namespace std;
 
+void savefile()
+{
+    ofstream file("Save.txt");
+    file << money << '\n' << coal << '\n' << iron << '\n';
+    for(int i = 0; i < height; i++)
+        for(int j = 0; j < width; j++)
+            file << pole.matrix[i][j].type << ' ';
+    file.close();
+}
+
+void loadsave()
+{
+    ifstream file("Save.txt");
+    if(!(file >> money))
+    {
+        money = 50;
+        coal = 0;
+        iron = 0;
+        pole = Farm();
+    }
+    else
+    {
+        file >> coal >> iron;
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+                file >> pole.matrix[i][j].type;
+        file.close();
+    }
+}
+
+void OXG(){
+    oxygen=0;
+    for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if (pole.matrix[i][j].type == 200)
+                    oxygen+=0;
+                else if (pole.matrix[i][j].type == 201)
+                    oxygen+=1;
+                else if (pole.matrix[i][j].type == 202)
+                    oxygen+=2;
+                else if (pole.matrix[i][j].type == 203)
+                    oxygen+=2;
+                else if (pole.matrix[i][j].type == 204)
+                    oxygen+=2;
+            }
+        }
+        if (oxygen>20) oxygen =20;
+}
+
+void T(){
+    temperature = 0;
+    for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if (pole.matrix[i][j].type == 300)
+                    temperature +=10;
+            }
+        }
+    if (temperature>100) temperature =100;
+}
+
 int main () {
     InitAudioDevice();              
     Music music = LoadMusicStream("resources/musik/trasovuna.mp3");
     PlayMusicStream(music);
     SetMusicVolume(music, 0.1);
-    float timePlayed = 0.0f;
     
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
     SetTargetFPS(60);
@@ -37,12 +96,12 @@ int main () {
     Button cancel(40,980,64,64,40,(char*)"X");
     cancel.default_color = RED;
    
-    Progressbar O2(1140,965,175,100,40,25,"O2",1);
+    Progressbar O2(1140,965,175,50,40,5,(char*)"O2",1);
     O2.color_bar = BLUE;
     O2.beg_color = LIGHTGRAY;
     O2.color = DARKGRAY;
 
-    Progressbar Temp(1365,965,175,100,40,25,"T(K)",1);
+    Progressbar Temp(1365,965,175,50,40,5,(char*)"T(K)",1);
     Temp.color_bar = RED;
     Temp.beg_color = LIGHTGRAY;
     Temp.color = DARKGRAY;
@@ -60,16 +119,23 @@ int main () {
 
     ar = {25,0,0,0,0};
     shop[0] = Goods(160,980,5,100,ar,100);
+    ar = {25,0,0,0,0};
     shop[1] = Goods(240,980,5,200,ar,200);
     ar = {50,4,1,0,0};
     shop[2] = Goods(320,980,5,300,ar,300);
     ar = {25,0,0,0,0};
     shop[3] = Goods(440,980,100,101,ar,121);
+    ar = {25,0,0,0,0};
     shop[4] = Goods(520,980,100,102,ar,122);
+    ar = {25,0,0,0,0};
     shop[5] = Goods(600,980,100,103,ar,123);
+    ar = {25,0,0,0,0};
     shop[6] = Goods(680,980,100,104,ar,124);
+    ar = {25,0,0,0,0};
     shop[7] = Goods(760,980,100,105,ar,125);
+    ar = {25,0,0,0,0};
     shop[8] = Goods(840,980,200,201,ar,121);
+    ar = {25,0,0,0,0};
     shop[9] = Goods(960,980,402,0,ar,403);
     ar = {0,0,0,0,0};
     shop[10] = Goods(1040,980,115,100,ar,404);
@@ -97,12 +163,11 @@ int main () {
         }
         else{
             UpdateMusicStream(music); 
-            timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music);
             pole.calculate();
             Img.calculate();
-            OXG(pole);
+            OXG();
             O2.fullbar=oxygen*5;
-            T(pole);
+            T();
             Temp.fullbar=temperature;
             m_x = (GetMouseX()-GetMouseX()%64)/64;
             m_y = (GetMouseY()-GetMouseY()%64)/64;
@@ -171,65 +236,4 @@ int main () {
     CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
     CloseWindow();
     
-}
-
-
-void savefile()
-{
-    ofstream file("Save.txt");
-    file << money << '\n' << coal << '\n' << iron << '\n';
-    for(int i = 0; i < height; i++)
-        for(int j = 0; j < width; j++)
-            file << pole.matrix[i][j].type << ' ';
-    file.close();
-}
-
-void loadsave()
-{
-    ifstream file("Save.txt");
-    if(!(file >> money))
-    {
-        money = 50;
-        coal = 0;
-        iron = 0;
-        pole = Farm();
-    }
-    else
-    {
-        file >> coal >> iron;
-        for(int i = 0; i < height; i++)
-            for(int j = 0; j < width; j++)
-                file >> pole.matrix[i][j].type;
-        file.close();
-    }
-}
-
-void OXG(Farm pole){
-    oxygen=0;
-    for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
-                if (pole.matrix[i][j].type == 200)
-                    oxygen+=0;
-                else if (pole.matrix[i][j].type == 201)
-                    oxygen+=1;
-                else if (pole.matrix[i][j].type == 202)
-                    oxygen+=2;
-                else if (pole.matrix[i][j].type == 203)
-                    oxygen+=2;
-                else if (pole.matrix[i][j].type == 204)
-                    oxygen+=2;
-            }
-        }
-        if (oxygen>20) oxygen =20;
-}
-
-void T(Farm pole){
-    temperature = 0;
-    for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
-                if (pole.matrix[i][j].type == 300)
-                    temperature +=10;
-            }
-        }
-    if (temperature>100) temperature =100;
 }
