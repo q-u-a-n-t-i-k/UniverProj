@@ -128,7 +128,7 @@ int main () {
     Cont.default_color = DARKGRAY;
     Button NewG(700,500,500,145,40,(char*)"New Game");
     NewG.default_color = DARKGRAY;
-    Button Save(700,650,500,145,40,(char*)"Save");
+    Button Save(700,650,500,145,40,(char*)"Quit");
     Save.default_color = DARKGRAY;
     loadsave();
 
