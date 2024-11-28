@@ -92,6 +92,7 @@ int main () {
     SetMusicVolume(music, 0);
     
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
+    ToggleFullscreen();
     SetTargetFPS(60);
     SetExitKey(KEY_K);
     font =  LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0);

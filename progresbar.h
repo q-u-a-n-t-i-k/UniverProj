@@ -3,7 +3,7 @@
 
 #include <raylib.h>
 #include <cmath>
-
+#include "properties.h"
 
 using namespace std;
 class Progressbar{
@@ -14,7 +14,6 @@ class Progressbar{
         char * text;
         bool  pressed=false, down = true, ishorizon;
         Color color, color_bar1,color_bar2, beg_color, text_color = BLACK;
-        Font font = LoadFontEx("resources/fonts/Panoptica.ttf", 40, 0, 0);
 
 
         void Draw(){
